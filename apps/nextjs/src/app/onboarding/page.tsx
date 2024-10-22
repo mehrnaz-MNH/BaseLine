@@ -31,12 +31,16 @@ const onBoardingSteps = [
 const Page = () => {
   // const account = useAccount();
 
-  // const router = useRouter();
+  const router = useRouter();
   // useEffect(() => {
   //   if (account.status === "disconnected") {
   //     router.push("/");
   //   }
   // }, [account.status, router]);
+
+  const handleNavigate = () => {
+    router.push("/onboarding/profile");
+  };
   return (
     <>
       {/* <Navbar /> */}
@@ -48,6 +52,7 @@ const Page = () => {
               key={item.StepNumber}
               StepNumber={item.StepNumber}
               CardName={item.CardName}
+              navTo={() => handleNavigate()}
             />
           ))}
         </div>
