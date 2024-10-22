@@ -3,6 +3,7 @@
 import "./ui/global.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
+import { TRPCReactProvider } from "@/trpc/react";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
@@ -32,17 +33,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-full bg-[#0A0909F7]">
-        <WagmiProvider config={config}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>
-              <div className="mx-auto flex min-h-screen max-w-2xl flex-grow flex-col px-4 py-8 font-[inter]">
-                {/* <main className="min-h-screen flex-grow bg-yellow-800"> */}
-                {children}
-                {/* </main> */}
-              </div>
-            </RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
+        <TRPCReactProvider>
+          <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+              <RainbowKitProvider>
+                <div className="mx-auto flex min-h-screen max-w-2xl flex-grow flex-col px-4 py-8 font-[inter]">
+                  {/* <main className="min-h-screen flex-grow bg-yellow-800"> */}
+                  {children}
+                  {/* </main> */}
+                </div>
+              </RainbowKitProvider>
+            </QueryClientProvider>
+          </WagmiProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );

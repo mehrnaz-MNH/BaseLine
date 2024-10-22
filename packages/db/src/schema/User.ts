@@ -13,16 +13,19 @@ import {
 @modelOptions({ schemaOptions: { collection: "users" } })
 export class UserClass {
   @prop()
-  public name?: string;
+  public firstName?: string;
+
+  @prop()
+  public lastName?: string;
 
   @prop()
   public email?: string;
 
   @prop()
-  public image?: string;
+  public emailVerified?: boolean;
 
   @prop()
-  public emailVerified?: boolean;
+  public onboardingComplete?: boolean;
 }
 
 export const User =
