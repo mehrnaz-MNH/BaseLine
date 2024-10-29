@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 
 import { CustomBtn } from "./_components/CustomBtn";
@@ -11,8 +10,8 @@ export default function Page() {
   const account = useAccount();
   const router = useRouter();
   useEffect(() => {
-    if (account.status === "connected") {
-      router.push("/onboarding");
+    if (account.status === "disconnected") {
+      router.push("/");
     }
   }, [account.status, router]);
   return (
@@ -27,13 +26,6 @@ export default function Page() {
         </p>
       </div>
       <div className="mx-auto mt-auto items-center justify-center pb-[13px] align-middle">
-        {/* <p className="text-[15px] font-extralight text-[#FFFFFF]">
-          {account.address}
-        </p> */}
-        {/* <button className="min-h-[52px] w-full max-w-[312px] rounded-[4px] bg-[#00FFD1] font-bold text-[#000000]">
-          Connect Wallet
-        </button> */}
-        {/* <ConnectButton /> */}
         <CustomBtn />
       </div>
     </div>

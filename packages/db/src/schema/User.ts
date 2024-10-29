@@ -34,6 +34,9 @@ export class UserClass {
   public emailVerified?: boolean;
 
   @prop()
+  public identityVerified?: boolean;
+
+  @prop()
   public onboardingComplete?: boolean;
 }
 

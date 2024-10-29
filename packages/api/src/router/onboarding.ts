@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { User } from "@acme/db";
 
-import { protectedProcedure, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
 export const CreateUserSchema = z.object({
   id: z.string(),
@@ -13,6 +13,7 @@ export const CreateUserSchema = z.object({
   email: z.string().email("Invalid email address"),
   profileComplete: z.boolean(),
   emailVerified: z.boolean(),
+  identityVerified: z.boolean(),
   onboardingComplete: z.boolean(),
 });
 
@@ -24,6 +25,7 @@ export const UpdateUserSchema = z.object({
   email: z.string().email("Invalid email address").optional(),
   profileComplete: z.boolean().optional(),
   emailVerified: z.boolean().optional(),
+  identityVerified: z.boolean().optional(),
   onboardingComplete: z.boolean().optional(),
 });
 
@@ -47,7 +49,8 @@ export const userRouter = {
   create: publicProcedure
     .input(CreateUserSchema)
     .mutation(async ({ input }) => {
-      await User.create(input);
+      const user = await User.create(input);
+      return user;
     }),
 
   update: publicProcedure
