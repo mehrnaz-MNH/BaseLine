@@ -10,13 +10,13 @@ import { useAccount } from "wagmi";
 import Navbar from "../_components/Navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const account = useAccount();
-  const router = useRouter();
-  useEffect(() => {
-    if (account.status === "disconnected") {
-      router.push("/");
-    }
-  }, [account.status, router]);
+  // const account = useAccount();
+  // const router = useRouter();
+  // useEffect(() => {
+  //   if (account.status === "disconnected") {
+  //     router.push("/");
+  //   }
+  // }, [account.status, router]);
 
   return (
     <div>

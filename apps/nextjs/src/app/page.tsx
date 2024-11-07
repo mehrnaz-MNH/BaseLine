@@ -1,19 +1,36 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAccount } from "wagmi";
+import { useAccount, useAccountEffect } from "wagmi";
 
 import { CustomBtn } from "./_components/CustomBtn";
 
 export default function Page() {
-  const account = useAccount();
   const router = useRouter();
-  useEffect(() => {
-    if (account.status === "disconnected") {
-      router.push("/");
-    }
-  }, [account.status, router]);
+  // const { isConnected } = useAccount();
+  // const [hasRedirected, setHasRedirected] = useState(false);
+
+  // useEffect(() => {
+  //   if (isConnected && !hasRedirected) {
+  //     router.push("/onboarding");
+  //     setHasRedirected(true);
+  //   } else if (!isConnected && hasRedirected) {
+  //     router.push("/");
+  //     setHasRedirected(false);
+  //   }
+  // }, [isConnected, hasRedirected, router]);
+
+  useAccountEffect({
+    onConnect(data) {
+      console.log("connected"!, data);
+      router.push("/onboarding");
+    },
+    // onDisconnect() {
+    //   router.push("/");
+    // },
+  });
+
   return (
     <div className="flex min-h-full flex-grow flex-col">
       <div>

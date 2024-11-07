@@ -1,10 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 export const CustomBtn = () => {
-  const router = useRouter();
-
   return (
     <ConnectButton.Custom>
       {({
@@ -45,10 +44,6 @@ export const CustomBtn = () => {
                     Connect Wallet
                   </button>
                 );
-              }
-
-              if (connected) {
-                router.push("/onboarding");
               }
 
               if (chain.unsupported) {
