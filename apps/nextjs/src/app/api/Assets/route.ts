@@ -83,8 +83,6 @@ export async function GET(req: NextRequest) {
           Number(ethers.formatUnits(value, Number(token.decimals))) *
           Number(matched_token?.current_price);
 
-        console.log(value_in_usd.toFixed(3));
-
         return {
           name: token.name,
           symbol: token.symbol,
