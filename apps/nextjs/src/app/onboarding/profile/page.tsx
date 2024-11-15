@@ -55,12 +55,12 @@ const Page = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-grow flex-col">
       <p className="text pb-[36px] pl-2 text-2xl font-bold text-[#FFFFFF]">
         Profile
       </p>
       <div className="flex flex-grow flex-col">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex flex-grow flex-col">
           <div className="mb-4 flex min-h-[48px] flex-row items-center gap-2 rounded-[6px] border-[1px] border-[#2E2E2E] bg-[#1A1A1A] p-2 text-[#FFFFFF]">
             <GoPerson className="text-xl text-[#00FFD1]" />
             <input

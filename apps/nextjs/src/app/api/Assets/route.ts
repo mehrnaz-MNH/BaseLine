@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
           symbol: token.symbol,
           value_in_eth: Number(
             ethers.formatUnits(value, Number(token.decimals)),
-          ).toFixed(5),
+          ).toFixed(4),
           price: matched_token?.current_price,
           image: matched_token?.image,
           value_in_usd: Number(value_in_usd.toFixed(4)),

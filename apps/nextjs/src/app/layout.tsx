@@ -25,12 +25,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-full bg-[#0A0909F7]">
+      <body className="bg-[#0A0909F7]">
         <TRPCReactProvider>
           <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
               <RainbowKitProvider>
-                <div className="mx-auto flex min-h-screen max-w-2xl flex-grow flex-col px-4 py-8 font-[inter]">
+                <div className="mx-auto flex max-h-screen min-h-screen max-w-2xl flex-grow flex-col px-4 py-8 font-[inter]">
                   {children}
                 </div>
               </RainbowKitProvider>

@@ -15,6 +15,7 @@ export const CreateUserSchema = z.object({
   emailVerified: z.boolean(),
   identityVerified: z.boolean(),
   onboardingComplete: z.boolean(),
+  verificationCode: z.string().optional(),
 });
 
 export const UpdateUserSchema = z.object({
@@ -27,6 +28,7 @@ export const UpdateUserSchema = z.object({
   emailVerified: z.boolean().optional(),
   identityVerified: z.boolean().optional(),
   onboardingComplete: z.boolean().optional(),
+  verificationCode: z.string().optional(),
 });
 
 export const userRouter = {
@@ -39,7 +41,7 @@ export const userRouter = {
   byId: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
-      const user = await User.findById(input.id);
+      const user = await User.findOne({ id: input.id });
 
       if (!user) return null;
 
@@ -53,19 +55,19 @@ export const userRouter = {
       return user;
     }),
 
-  update: publicProcedure
-    .input(UpdateUserSchema)
-    .mutation(async ({ input }) => {
-      const { id, ...updatedFields } = input;
-      const updatedUser = await User.findByIdAndUpdate(id, updatedFields, {
-        new: true,
-        runValidators: true,
-      });
+  // update: publicProcedure
+  //   .input(UpdateUserSchema)
+  //   .mutation(async ({ input }) => {
+  //     const { id, ...updatedFields } = input;
+  //     const updatedUser = await User.findByIdAndUpdate(id, updatedFields, {
+  //       new: true,
+  //       runValidators: true,
+  //     });
 
-      if (!updatedUser) {
-        throw new Error("User not found");
-      }
+  //     if (!updatedUser) {
+  //       throw new Error("User not found");
+  //     }
 
-      return updatedUser;
-    }),
+  //     return updatedUser;
+  //   }),
 } satisfies TRPCRouterRecord;

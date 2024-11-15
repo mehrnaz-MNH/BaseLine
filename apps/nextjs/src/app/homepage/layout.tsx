@@ -12,11 +12,11 @@ import { useAccount, useAccountEffect } from "wagmi";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const account = useAccount();
   const router = useRouter();
-  //   useEffect(() => {
-  //     if (account.status === "disconnected") {
-  //       router.push("/");
-  //     }
-  //   }, [account.status, router]);
+  // useEffect(() => {
+  //   if (account.status === "disconnected") {
+  //     router.push("/");
+  //   }
+  // }, [account.status, router]);
 
   const pathname = usePathname();
 
@@ -29,37 +29,47 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     console.log(account.connector);
   }, [account]);
 
-//   useAccountEffect({
-//     onConnect(data) {
-//       console.log("connected"!, data);
-//     },
-//     onDisconnect() {
-//       router.push("/");
-//     },
-//   });
+  useAccountEffect({
+    onConnect(data) {
+      console.log("connected"!, data);
+    },
+    onDisconnect() {
+      router.push("/");
+    },
+  });
 
   return (
-    <div>
+    <div className="flex flex-grow flex-col">
       <Navbar />
 
-      <div>
-        <Link
-          className={`link ${pathname === "/homepage/portfolio" ? "active" : ""}`}
-          href="/homepage/portfolio"
-        >
-          Portfolio
-        </Link>
+      <div className="flex flex-grow flex-col px-3">
+        <div className="flex space-x-3">
+          <Link
+            className="text-[18px] font-bold"
+            href="/homepage/portfolio"
+            style={{
+              color:
+                pathname === "/homepage/portfolio" ? "#FFFFFF" : "#FFFFFF4D",
+            }}
+          >
+            Portfolio
+          </Link>
 
-        <Link
-          className={`link ${pathname === "/homepage/profile" ? "active" : ""}`}
-          href="/homepage/mainprofile"
-        >
-          Profile
-        </Link>
-      </div>
+          <Link
+            className="text-[18px] font-bold"
+            href="/homepage/mainprofile"
+            style={{
+              color:
+                pathname === "/homepage/mainprofile" ? "#FFFFFF" : "#FFFFFF4D",
+            }}
+          >
+            Profile
+          </Link>
+        </div>
 
-      <div className="mx-auto flex max-h-screen min-h-screen max-w-2xl flex-grow flex-col px-4 py-8 font-[inter]">
-        {children}
+        <div className="flex max-w-2xl flex-grow flex-col font-[inter]">
+          {children}
+        </div>
       </div>
     </div>
   );

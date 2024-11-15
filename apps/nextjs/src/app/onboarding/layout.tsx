@@ -19,9 +19,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // }, [account.status, router]);
 
   return (
-    <div>
+    <div className="flex flex-grow flex-col">
       <Navbar />
-      <div className="mx-auto flex max-h-screen min-h-screen max-w-2xl flex-grow flex-col px-4 py-8 font-[inter]">
+      <div className="flex max-w-2xl flex-grow flex-col font-[inter]">
         {children}
       </div>
     </div>

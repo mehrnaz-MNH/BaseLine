@@ -13,18 +13,22 @@ const onBoardingSteps = [
   {
     StepNumber: 1,
     CardName: "Complete your profile",
+    page: "/onboarding/profile",
   },
   {
     StepNumber: 2,
     CardName: "Confirm email address",
+    page: "/onboarding/emailverify",
   },
   {
     StepNumber: 3,
     CardName: "Verify your identity",
+    page: "/onboarding/profile",
   },
   {
     StepNumber: 4,
     CardName: "View my portfolio",
+    page: "/onboarding/profile",
   },
 ];
 
@@ -38,8 +42,8 @@ const Page = () => {
   //   }
   // }, [account.status, router]);
 
-  const handleNavigate = () => {
-    router.push("/onboarding/profile");
+  const handleNavigate = (page: string) => {
+    router.push(page);
   };
   return (
     <>
@@ -52,7 +56,7 @@ const Page = () => {
               key={item.StepNumber}
               StepNumber={item.StepNumber}
               CardName={item.CardName}
-              navTo={() => handleNavigate()}
+              navTo={() => handleNavigate(item.page)}
             />
           ))}
         </div>

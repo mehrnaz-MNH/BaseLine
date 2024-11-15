@@ -38,6 +38,9 @@ export class UserClass {
 
   @prop()
   public onboardingComplete?: boolean;
+
+  @prop()
+  public verificationCode?: string;
 }
 
 export const User =

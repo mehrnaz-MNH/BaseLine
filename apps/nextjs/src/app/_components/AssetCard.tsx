@@ -12,40 +12,32 @@ interface Props {
 
 const AssetCard: React.FC<Props> = ({ asset }) => {
   return (
-    <div className="flex items-center justify-between rounded-md bg-[#2F2E2E] p-4 text-white shadow-md hover:bg-[#9747FF]">
+    <div className="flex items-center justify-between text-white">
       {/* Image and Name*/}
-      <div className="flex w-1/5 items-center justify-start md:justify-center">
+      <div className="flex w-[35%] items-center">
         <img
-          className="mr-4 w-5 md:w-9"
+          className="mr-4 h-[20px] w-[20px]"
           src={asset.image}
           alt={`${asset.symbol} icon`}
           onError={(e) => {
             e.currentTarget.src = "/assets/color/generic.svg";
           }}
         />
-        <div>
-          <div className="text-sm font-semibold md:text-base lg:text-lg xl:text-xl">
-            {asset.name}
-          </div>
-        </div>
+
+        <p className="w-full text-left text-[12px] font-bold">{asset.name}</p>
       </div>
 
       {/* VALUE IN ETH */}
-      <div className="flex w-1/4 justify-end md:justify-start">
-        <span>
+      <div className="flex w-[32%] gap-1 text-right text-[13px] font-normal">
+        <p className="w-full text-right">
           {Number(asset.value_in_eth) === null ? "0.00" : asset.value_in_eth}{" "}
           {asset.symbol}
-        </span>
+        </p>
       </div>
 
       {/* VALUE IN USD */}
-      <div className="flex w-1/4 items-center">
-        <div
-          className={`rounded-md p-1 text-center`}
-          style={{ width: "fit-content" }}
-        >
-          $ {asset.value_in_usd}
-        </div>
+      <div className="flex w-[33%] text-right text-[13px] text-[#00FFD1]">
+        <p className="w-full text-right">${asset.value_in_usd}</p>
       </div>
     </div>
   );
