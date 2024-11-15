@@ -25,6 +25,7 @@ const config = {
     config.externals.push("pino-pretty");
     return config;
   },
+  swcMinify: false, // Disable minification
 };
 
 export default config;
