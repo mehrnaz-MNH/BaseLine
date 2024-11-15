@@ -8,9 +8,10 @@ type Asset = {
 
 interface Props {
   asset: Asset;
+  isLoading: boolean;
 }
 
-const AssetCard: React.FC<Props> = ({ asset }) => {
+const AssetCard: React.FC<Props> = ({ asset, isLoading }) => {
   return (
     <div className="flex items-center justify-between text-white">
       {/* Image and Name*/}
@@ -37,7 +38,11 @@ const AssetCard: React.FC<Props> = ({ asset }) => {
 
       {/* VALUE IN USD */}
       <div className="flex w-[33%] text-right text-[13px] text-[#00FFD1]">
-        <p className="w-full text-right">${asset.value_in_usd}</p>
+        {isLoading ? (
+          <div className="mx-auto h-4 w-4 animate-spin rounded-full border-2 border-[#00FFD1] border-t-transparent" />
+        ) : (
+          <p className="w-full text-right">${asset.value_in_usd}</p>
+        )}
       </div>
     </div>
   );

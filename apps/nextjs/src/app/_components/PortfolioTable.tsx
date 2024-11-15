@@ -12,9 +12,10 @@ type Asset = {
 
 interface Props {
   assets: Asset[];
+  isLoading: boolean;
 }
 
-const PortfolioTable: React.FC<Props> = ({ assets }) => {
+const PortfolioTable: React.FC<Props> = ({ assets, isLoading }) => {
   return (
     <div className="w-full">
       <div className="flex items-center">
@@ -36,7 +37,7 @@ const PortfolioTable: React.FC<Props> = ({ assets }) => {
 
       <div className="flex flex-col gap-2">
         {assets.map((asset) => (
-          <AssetCard key={asset.symbol} asset={asset} />
+          <AssetCard key={asset.symbol} asset={asset} isLoading={isLoading} />
         ))}
       </div>
     </div>
