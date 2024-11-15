@@ -16,6 +16,7 @@ interface User {
   emailVerified: boolean;
   identityVerified: boolean;
   onboardingComplete: boolean;
+  verificationCode: string;
 }
 
 const Page = () => {
@@ -42,6 +43,7 @@ const Page = () => {
       emailVerified: false,
       identityVerified: false,
       onboardingComplete: false,
+      verificationCode: "000000",
     };
 
     createUser.mutate(newUser, {

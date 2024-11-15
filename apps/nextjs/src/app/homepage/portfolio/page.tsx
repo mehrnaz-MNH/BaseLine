@@ -2,7 +2,7 @@
 
 import React from "react";
 import PortfolioTable from "@/app/_components/PortfolioTable";
-import getAssets from "@/app/lib/Utils";
+import { getAssets } from "@/app/lib/Utils";
 import { api } from "@/trpc/react";
 import { useAccount } from "wagmi";
 

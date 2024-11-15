@@ -15,7 +15,7 @@ export const CreateUserSchema = z.object({
   emailVerified: z.boolean(),
   identityVerified: z.boolean(),
   onboardingComplete: z.boolean(),
-  verificationCode: z.string().optional(),
+  verificationCode: z.string(),
 });
 
 export const UpdateUserSchema = z.object({
@@ -55,19 +55,23 @@ export const userRouter = {
       return user;
     }),
 
-  // update: publicProcedure
-  //   .input(UpdateUserSchema)
-  //   .mutation(async ({ input }) => {
-  //     const { id, ...updatedFields } = input;
-  //     const updatedUser = await User.findByIdAndUpdate(id, updatedFields, {
-  //       new: true,
-  //       runValidators: true,
-  //     });
+  update: publicProcedure
+    .input(UpdateUserSchema)
+    .mutation(async ({ input }) => {
+      const { id, ...updatedFields } = input;
+      const updatedUser = await User.findOneAndUpdate(
+        { id: id },
+        updatedFields,
+        {
+          new: true,
+          runValidators: true,
+        },
+      );
 
-  //     if (!updatedUser) {
-  //       throw new Error("User not found");
-  //     }
+      if (!updatedUser) {
+        throw new Error("User not found");
+      }
 
-  //     return updatedUser;
-  //   }),
+      return updatedUser;
+    }),
 } satisfies TRPCRouterRecord;

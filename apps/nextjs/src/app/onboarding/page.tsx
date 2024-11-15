@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { isTemplateExpression } from "typescript";
+import { api } from "@/trpc/react";
+import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 
 import Card from "../_components/Card";
-import { CustomBtn } from "../_components/CustomBtn";
-import Navbar from "../_components/Navbar";
+import { generateVerificationCode, sendEmailVerification } from "../lib/email";
+import { sendEmail } from "../lib/Utils";
 
 const onBoardingSteps = [
   {
@@ -33,21 +34,48 @@ const onBoardingSteps = [
 ];
 
 const Page = () => {
-  // const account = useAccount();
+  const account = useAccount();
+  const address: string = account.address as string;
+  const { data } = api.user.byId.useQuery({ id: address });
+  const user = (data as any)?._doc;
+  const email: string = user?.email;
+  const updateUserVerification = api.user.update.useMutation();
+  const { mutate } = sendEmail();
 
+  const [isSending, setIsSending] = useState(false);
   const router = useRouter();
-  // useEffect(() => {
-  //   if (account.status === "disconnected") {
-  //     router.push("/");
-  //   }
-  // }, [account.status, router]);
 
-  const handleNavigate = (page: string) => {
+  const handleVerificationSend = async () => {
+    if (!email) {
+      console.error("No email found for the user.");
+      return;
+    }
+
+    const verificationCode = generateVerificationCode();
+    setIsSending(true);
+
+    try {
+      await updateUserVerification.mutateAsync({
+        id: address,
+        verificationCode,
+      });
+
+      mutate({ email, code: verificationCode });
+      console.log("Verification email sent.");
+    } catch (error) {
+      console.error("Error during verification:", error);
+    } finally {
+      setIsSending(false);
+    }
+  };
+  const handleNavigate = async (page: string) => {
+    if (page === "/onboarding/emailverify") {
+      await handleVerificationSend();
+    }
     router.push(page);
   };
   return (
     <>
-      {/* <Navbar /> */}
       <div>
         <p className="text pl-4 text-2xl font-bold text-[#FFFFFF]">Welcome</p>
         <div className="mb-6 min-h-full">
