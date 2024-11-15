@@ -52,6 +52,7 @@ const Page = () => {
     }
 
     const verificationCode = generateVerificationCode();
+    console.log("new code:", verificationCode);
     setIsSending(true);
 
     try {

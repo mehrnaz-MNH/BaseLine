@@ -34,27 +34,3 @@ export const generateVerificationCode = () => {
   const code = Math.floor(100000 + Math.random() * 900000);
   return code.toString();
 };
-
-// export const verifyCode = async (id: string, inputCode: string) => {
-//   try {
-//     const { data } = api.user.byId.useQuery({ id: id });
-//     const user = (data as any)?._doc;
-//     const code: string = user?.verificationCode;
-
-//     if (code && code === inputCode) {
-//       const updateUserVerification = api.user.update.useMutation();
-
-//       await updateUserVerification.mutateAsync({
-//         id,
-//         emailVerified: true,
-//       });
-
-//       return true;
-//     }
-
-//     return false;
-//   } catch (error) {
-//     console.error("Verification failed:", error);
-//     return false;
-//   }
-// };

@@ -1,22 +1,56 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
 import { FaHashtag } from "react-icons/fa6";
 import { useAccount } from "wagmi";
 
 const Page = () => {
   const [code, setCode] = useState<string>("");
+  const [isVerified, setIsVerified] = useState<boolean>(false);
 
   const account = useAccount();
   const address: string = account.address as string;
   const { data } = api.user.byId.useQuery({ id: address });
   const user = (data as any)?._doc;
   const email: string = user?.email;
+  const vercode: string = user?.verificationCode;
+  const updateUserVerification = api.user.update.useMutation();
   console.log(email);
+  console.log(vercode);
   console.log(data);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log("input code", code);
+    if (!vercode || vercode !== code || vercode === "000000") {
+      setIsVerified(false);
+
+      console.log("here");
+    }
+
+    try {
+      await updateUserVerification.mutateAsync({
+        id: address,
+        emailVerified: true,
+      });
+
+      setIsVerified(true);
+      console.log("reached here");
+    } catch (error) {
+      console.error("Verification failed:", error);
+      setIsVerified(false);
+    }
+  };
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isVerified) {
+      router.push("/onboarding");
+    }
+  }, [isVerified, router]);
 
   return (
     <div className="flex flex-grow flex-col">
@@ -47,7 +81,7 @@ const Page = () => {
               type="submit"
               className="min-h-[52px] w-full rounded-[4px] bg-[#00FFD1] font-bold text-[#000000]"
             >
-              Save
+              Submit
             </button>
           </div>
         </form>
@@ -57,5 +91,3 @@ const Page = () => {
 };
 
 export default Page;
-
-//random change
